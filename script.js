@@ -16,6 +16,7 @@ timeBlockEl.on("click", ".saveBtn", saveTextBox);
 
 timeBlockEl.each(function() {
   var key = $(this).attr("id");
+  // console.log(key);
   var eventInput = localStorage.getItem(key);
   
   if(eventInput) {
@@ -26,16 +27,27 @@ timeBlockEl.each(function() {
     // else if the current hour is greater than the hour set attr to future
     // otherwise set attr to past
 
+    
+    
   var currentHour = dayjs().hour();
-  var hourNum = parseInt(key.slice(5));
-  console.log(typeof currentHour)
-  console.log(typeof hourNum)
+  var hourNum = key.slice(5)
+  // console.log(parseInt(currentHour))
+  // console.log(parseInt(hourNum))
+  // console.log('this is currentHour:' + currentHour)
+  // console.log( 'id based on box ' + hourNum) 
 
-  if (currentHour === hourNum) {
+
+  currentHour= parseInt(currentHour.toString())
+  hourNum = parseInt(hourNum)
+  console.log('this is currentHour:' + currentHour)
+  console.log( 'id based on box ' + hourNum) 
+
+  if (currentHour == hourNum) {
     $(this).attr("class", "row time-block present");
-  } else if (currentHour > hourNum) {
+  } else if (currentHour < hourNum) {
     $(this).attr("class", "row time-block future");
-  } else {
+  }
+  else {
     $(this).attr("class", "row time-block past");
   }
 });
