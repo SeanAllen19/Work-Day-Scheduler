@@ -1,103 +1,54 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-var saveButton = $('.fas');
-var inputBox = $('.description');
-var timeOfDay = $('.time-block');
+$(function () {
 
-// inputBox.on('click', function () {
-//   console.log('Hello World');
-// });
 
-renderLastComment()
+var timeBlockEl = $(".time-block");
 
-function saveComment() {
-  var input = {
-    comment: inputBox.val(),
-  };
-  console.log(input)
- 
-  localStorage.setItem("input", JSON.stringify(input));
+function saveTextBox() {
+  var key = $(this).parent().attr("id");
+  var input = $(this).siblings(".description").val();
+
+  localStorage.setItem(key, input);
+
 }
 
-function renderLastComment() {
-  var lastComment = JSON.parse(localStorage.getItem("input"));
-  console.log(lastComment['comment'])
-  inputBox = lastComment['comment'];
-}
+timeBlockEl.on("click", ".saveBtn", saveTextBox);
 
-saveButton.on('click', function (event) {
-  event.preventDefault();
-  console.log(timeOfDay)
-  saveComment();
-  renderLastComment();
+
+timeBlockEl.each(function() {
+  var key = $(this).attr("id");
+  var eventInput = localStorage.getItem(key);
+  
+  if(eventInput) {
+    $(this).children(".description").text(eventInput);
+  }
+
+   //if the current hour is === to the hour num ID, change attr to present
+    // else if the current hour is greater than the hour set attr to future
+    // otherwise set attr to past
+
+  var currentHour = dayjs().hour();
+  var hourNum = parseInt(key.slice(5));
+  console.log(typeof currentHour)
+  console.log(typeof hourNum)
+
+  if (currentHour === hourNum) {
+    $(this).attr("class", "row time-block present");
+  } else if (currentHour > hourNum) {
+    $(this).attr("class", "row time-block future");
+  } else {
+    $(this).attr("class", "row time-block past");
+  }
 });
 
 
-
-
-
-
-
-//// If the refomatDate is < reformateDate then it should be grey, if the reformatDate is > than the reformatDate it should be green. Current hour should be red ( look to getting a date var with 24hrs in DayJS?)
-// if (reformatDate < reformatDate) {
-//   console.log(passed)
-// } else ≈
-var time = dayjs().format('hh:mm:ss');
-if (time < time) {
-  console.log('true');
-} else if (time > time) {
-  console.log('over')
-}
 function getDate() {
-var reformatDate = dayjs().format('dddd, MMMM D YYYY, h:mm:ss a');
-$('#currentDay').text(reformatDate);
-};
-setInterval(getDate, 1000)
+  var reformatDate = dayjs().format('dddd, MMMM D YYYY, h:mm:ss a');
+  $('#currentDay').text(reformatDate);
+  };
+  setInterval(getDate, 1000)
+  
 
 
-
-//// If the refomatDate is < reformateDate then it should be grey, if the reformatDate is > than the reformatDate it should be green. Current hour should be red ( look to getting a date var with 24hrs in DayJS?)
-// if (reformatDate < reformatDate) {
-//   console.log(passed)
-// } else ≈
-var time = dayjs().format('hh:mm:ss');
-if (time < time) {
-  console.log('true');
-} else if (time > time) {
-  console.log('over')
-}
-
-
-function getDate() {
-var reformatDate = dayjs().format('dddd, MMMM D YYYY, h:mm:ss a');
-$('#currentDay').text(reformatDate);
-};
-setInterval(getDate, 1000)
-
-
-
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage? 
-  //
-
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
 
 
