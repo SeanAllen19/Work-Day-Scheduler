@@ -28,3 +28,17 @@ THEN the text for that event is saved in local storage
 WHEN I refresh the page
 THEN the saved events persist
 ```
+
+## Screenshots
+
+### Based on the time of day, the colors will remind you of what is to come and what you have missed.
+
+![Showing How the scheduler works](./Wor.png)
+
+### Make sure to save your work to save it to the Local Storage
+
+![Showing How the scheduler works](./Wor2.png)
+
+## License
+
+Refer to the License in folder
